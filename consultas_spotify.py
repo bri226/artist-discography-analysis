@@ -6,14 +6,13 @@ from config import CLIENT_ID, CLIENT_SECRET, SERVER, DATABASE
 
 conn_str = (
     r'DRIVER={SQL Server};'
-    rf'SERVER={SERVER};'  # Cambia por tu instancia de SQL Server
-    rf'DATABASE={DATABASE};'    # Cambia por tu base de datos
+    rf'SERVER={SERVER};' 
+    rf'DATABASE={DATABASE};'
     r'Trusted_Connection=yes;'
 )
 conn = pyodbc.connect(conn_str)
 cursor = conn.cursor()
 
-# Configurar las credenciales de Spotify
 client_id = CLIENT_ID
 client_secret = CLIENT_SECRET
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
@@ -78,9 +77,6 @@ for album in albums['items']:
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, track_data["Nombre_Artista"], track_data["Nombre_Album"], track_data["Nombre_Track"], track_data["Duration_ms"], track_data["Explicit"], track_data["Artists"], track_data["Track_Number"])
 
-# Confirmar las transacciones
 conn.commit()
-
-# Cerrar la conexión
 cursor.close()
 conn.close()
